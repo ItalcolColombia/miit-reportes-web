@@ -1,0 +1,58 @@
+# Node
+node_modules/
+
+# Build outputs
+dist/
+dist-ssr/
+build/
+
+# Vite
+.vite/
+.cache/
+
+# Coverage
+coverage/
+*.lcov
+
+# Environment files (keep local secrets out of the repo)
+.env
+.env.local
+.env.production
+.env.*.local
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editors/IDEs
+.vscode/
+!.vscode/extensions.json
+.idea/
+
+# Temporary
+tmp/
+temp/
+
+# Misc
+*.tgz
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Docker overrides
+docker-compose.override.yml
+
+# Keep lockfiles in the repo (important for reproducible installs)
+# package-lock.json
+# pnpm-lock.yaml
+# yarn.lock
