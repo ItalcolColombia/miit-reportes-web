@@ -32,6 +32,10 @@ lerna-debug.log*
 .DS_Store
 Thumbs.db
 
+# Clojure tooling caches
+.clj_kondo/
+.lsp/
+
 # Editors/IDEs
 .vscode/
 !.vscode/extensions.json

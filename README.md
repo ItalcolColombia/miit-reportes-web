@@ -179,6 +179,6 @@ Proyecto privado - Todos los derechos reservados
 
 ---
 
-**Desarrollado por:** Daniel Castillo  
+**Desarrollado por:** Daniel Castillo (Metalteco)
 **Versión:** 1.0.0  
 **Fecha:** Enero 2026

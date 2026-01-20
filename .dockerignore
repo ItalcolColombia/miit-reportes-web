@@ -41,10 +41,13 @@ docs
 *.md
 !README.md
 
-# Docker files (no necesarios dentro del contenedor)
-Dockerfile*
+# Docker files (no necesarios dentro del contexto de build)
 docker-compose*
 .dockerignore
+
+# Local tooling caches
+.clj_kondo
+.lsp
 
 # Misc
 .eslintcache
