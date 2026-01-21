@@ -196,11 +196,49 @@ export const ReporteDetallePage: React.FC = () => {
     );
   }
 
+  // Campos que deben mostrarse como enteros (sin decimales)
+  // Se incluyen variantes con/sin tilde y el nombre interno del campo
+  const CAMPOS_ENTEROS = new Set([
+    // Nombres mostrados (con y sin tilde, en minúsculas)
+    'id transaccion',
+    'id transacción',
+    'id almacen',
+    'id almacén',
+    'bascula',
+    'báscula',
+    'consecutivo',
+    // Nombres internos comunes
+    'id_transaccion',
+    'id_almacen',
+    'idtransaccion',
+    'idalmacen',
+  ]);
+
+  // Determinar si un campo debe mostrarse como entero
+  const esEntero = (campo: string, nombreMostrar: string): boolean => {
+    const campoLower = campo?.toLowerCase() || '';
+    const nombreLower = nombreMostrar?.toLowerCase() || '';
+    
+    return CAMPOS_ENTEROS.has(campoLower) || CAMPOS_ENTEROS.has(nombreLower);
+  };
+
+  // Determinar el tipo de dato correcto para una columna
+  const getTipoDato = (col: any): string => {
+    const campo = col.campo || '';
+    const nombreMostrar = (col as any).nombre_mostrar || (col as any).nombre || '';
+    
+    // Si el campo o nombre_mostrar está en la lista de enteros, forzar tipo 'integer'
+    if (esEntero(campo, nombreMostrar)) {
+      return 'integer';
+    }
+    return (col as any).tipo_dato || (col as any).tipo || 'string';
+  };
+
   // Preparar columnas para la tabla (compatibilidad con diferentes formatos)
   const columnas: ColumnaReporte[] = reporte.columnas?.map((col) => ({
     campo: col.campo,
     nombre_mostrar: (col as any).nombre_mostrar || (col as any).nombre || col.campo,
-    tipo_dato: (col as any).tipo_dato || (col as any).tipo || 'string',
+    tipo_dato: getTipoDato(col),
     orden: (col as any).orden || 0,
     visible: (col as any).visible !== false,
     ordenable: (col as any).ordenable !== false,
@@ -222,18 +260,18 @@ export const ReporteDetallePage: React.FC = () => {
       ? Object.keys(reporte.datos[0]).map((key, index) => ({
           campo: key,
           nombre_mostrar: key,
-          tipo_dato: 'string' as const,
+          tipo_dato: esEntero(key, key) ? 'integer' as const : 'string' as const,
           orden: index,
           visible: true,
           ordenable: true,
           filtrable: false,
           es_totalizable: false,
           tipo_totalizacion: null,
-          alineacion: 'left' as const,
+          alineacion: (esEntero(key, key) ? 'right' : 'left') as const,
           formato: null,
           prefijo: null,
           sufijo: null,
-          decimales: 2,
+          decimales: esEntero(key, key) ? 0 : 2,
           ancho_minimo: 100,
         }))
       : [];

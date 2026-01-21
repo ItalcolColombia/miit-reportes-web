@@ -206,6 +206,7 @@ export const FiltrosReporteComponent: React.FC<FiltrosReporteProps> = ({
                         fecha_inicio: date?.toISOString(),
                       }));
                     }}
+                    views={['year', 'month', 'day']}
                     slotProps={{
                       textField: {
                         size: 'small',
@@ -231,6 +232,7 @@ export const FiltrosReporteComponent: React.FC<FiltrosReporteProps> = ({
                         fecha_fin: date?.toISOString(),
                       }));
                     }}
+                    views={['year', 'month', 'day']}
                     slotProps={{
                       textField: {
                         size: 'small',
