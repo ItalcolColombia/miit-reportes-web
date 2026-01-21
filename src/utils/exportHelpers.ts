@@ -23,8 +23,6 @@ export const getFileExtension = (formato: 'pdf' | 'excel' | 'csv'): string => {
   switch (formato) {
     case 'pdf':
       return 'pdf';
-    case 'excel':
-      return 'xlsx';
     case 'csv':
       return 'csv';
     default:
@@ -37,7 +35,7 @@ export const getFileExtension = (formato: 'pdf' | 'excel' | 'csv'): string => {
  */
 export const generateExportFilename = (
   codigoReporte: string,
-  formato: 'pdf' | 'excel' | 'csv'
+  formato: 'pdf' | 'csv'
 ): string => {
   const fecha = new Date().toISOString().split('T')[0];
   const extension = getFileExtension(formato);

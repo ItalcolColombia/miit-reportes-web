@@ -40,7 +40,7 @@ export default defineConfig({
           'react-vendor': ['react', 'react-dom', 'react-router-dom'],
           'mui-vendor': ['@mui/material', '@mui/icons-material', '@emotion/react', '@emotion/styled'],
           'utils-vendor': ['axios', 'date-fns', 'zod'],
-          'export-vendor': ['jspdf', 'xlsx', 'papaparse'],
+          'export-vendor': ['jspdf', 'papaparse'],
         },
       },
     },

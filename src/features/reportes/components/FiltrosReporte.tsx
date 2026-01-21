@@ -196,7 +196,7 @@ export const FiltrosReporteComponent: React.FC<FiltrosReporteProps> = ({
             <Grid container spacing={2} alignItems="center">
               {/* Fecha Inicio */}
               {requiereFechas && (
-                <Grid item xs={12} sm={6} md={3}>
+                <Grid size={{ xs: 12, sm: 6, md: 3 }}>
                   <DatePicker
                     label="Fecha Inicio"
                     value={filtrosTemp.fecha_inicio ? new Date(filtrosTemp.fecha_inicio) : null}
@@ -221,7 +221,7 @@ export const FiltrosReporteComponent: React.FC<FiltrosReporteProps> = ({
 
               {/* Fecha Fin */}
               {requiereFechas && (
-                <Grid item xs={12} sm={6} md={3}>
+                <Grid size={{ xs: 12, sm: 6, md: 3 }}>
                   <DatePicker
                     label="Fecha Fin"
                     value={filtrosTemp.fecha_fin ? new Date(filtrosTemp.fecha_fin) : null}
@@ -246,7 +246,7 @@ export const FiltrosReporteComponent: React.FC<FiltrosReporteProps> = ({
 
               {/* Selector de Material (si está habilitado) */}
               {permiteFiltrarMaterial && (
-                <Grid item xs={12} sm={6} md={3}>
+                <Grid size={{ xs: 12, sm: 6, md: 3 }}>
                   <Autocomplete
                     options={materiales}
                     getOptionLabel={(option: Material) => `${option.codigo} - ${option.nombre}`}
@@ -287,7 +287,7 @@ export const FiltrosReporteComponent: React.FC<FiltrosReporteProps> = ({
             {filtrosColumnas.length > 0 && (
               <Grid container spacing={2} alignItems="center">
                 {filtrosColumnas.map((filtro: FiltroColumna) => (
-                  <Grid item xs={12} sm={6} md={3} key={filtro.campo}>
+                  <Grid size={{ xs: 12, sm: 6, md: 3 }} key={filtro.campo}>
                     {filtro.tipo_filtro === 'select' ? (
                       <Autocomplete
                         options={filtro.opciones || []}
