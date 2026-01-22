@@ -26,12 +26,23 @@ npm install
 
 3. **Configurar variables de entorno**
 ```bash
-# Copiar archivo de ejemplo
+# Copiar archivo de ejemplo (elige la instrucción según tu plataforma)
+# Unix / macOS:
 cp .env.example .env.development
 
-# Editar .env.development con tus valores
+# PowerShell (Windows):
+Copy-Item .env.example .env.development
+
+# CMD (Windows):
+copy .env.example .env.development
+
+# Edita .env.development con tus valores
 VITE_API_BASE_URL=http://localhost:8000/api/v1
 ```
+
+Nota: el repositorio contiene `.env.example` y `.env.development`. Si vas a desplegar
+en producción crea un archivo `.env.production` a partir de `.env.example` y no subas
+secretos al repositorio.
 
 4. **Iniciar servidor de desarrollo**
 ```bash
@@ -72,13 +83,13 @@ miit-reportes-web/
 
 ## 🔧 Tecnologías Principales
 
-- **React 18** - Framework UI
-- **TypeScript** - Type safety
-- **Vite** - Build tool
-- **Material-UI v5** - Componentes UI
-- **React Query** - Estado del servidor
-- **Zustand** - Estado global
-- **React Router v6** - Routing
+- **React 19** - Framework UI
+- **TypeScript (≈5.9)** - Type safety
+- **Vite (v7)** - Build tool
+- **Material-UI (MUI) v7** - Componentes UI
+- **@tanstack/react-query v5** - Estado del servidor
+- **Zustand v5** - Estado global
+- **React Router v7** - Routing
 - **Axios** - Cliente HTTP
 - **React Hook Form** - Formularios
 - **Recharts** - Gráficos
@@ -155,8 +166,25 @@ Los archivos compilados estarán en la carpeta `dist/`
 ### Variables de entorno de producción
 ```bash
 # .env.production
-VITE_API_BASE_URL=https://api.miit.com/api/v1
+VITE_API_BASE_URL=https://integrador.turbograneles.com/api/v1
 VITE_APP_ENV=production
+```
+
+Nota: actualmente no hay un `.env.production` en el repositorio; crea uno a partir
+de `.env.example` y añade allí las variables de producción.
+
+**Advertencia sobre scripts de instalación**
+
+Los scripts `install.sh` y `install.bat` son atajos útiles para desarrollo local
+—verifican Node/npm e instalan dependencias—pero `install.bat` usa `pause` y es
+interactivo, por lo que NO es adecuado para servidores o CI. En servidores o
+entornos no interactivos usa `npm ci` o, preferiblemente, despliega con Docker.
+
+Ejemplo rápido con Docker:
+```bash
+docker-compose up --build
+# Para producción:
+docker-compose -f docker-compose.prod.yml up --build -d
 ```
 
 ## 📚 Documentación Adicional
