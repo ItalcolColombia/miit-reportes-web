@@ -199,12 +199,30 @@ export const FiltrosReporteComponent: React.FC<FiltrosReporteProps> = ({
                 <Grid size={{ xs: 12, sm: 6, md: 3 }}>
                   <DatePicker
                     label="Fecha Inicio"
-                    value={filtrosTemp.fecha_inicio ? new Date(filtrosTemp.fecha_inicio) : null}
+                    value={filtrosTemp.fecha_inicio ? (() => {
+                      // Parsear la fecha ISO y crear una fecha local para mostrar correctamente
+                      const [year, month, day] = filtrosTemp.fecha_inicio.split('T')[0].split('-').map(Number);
+                      return new Date(year, month - 1, day);
+                    })() : null}
                     onChange={(date) => {
-                      setFiltrosTemp((prev) => ({
-                        ...prev,
-                        fecha_inicio: date?.toISOString(),
-                      }));
+                      if (date) {
+                        // Normalizar al inicio del día en UTC (00:00:00.000Z)
+                        const fechaNormalizada = new Date(Date.UTC(
+                          date.getFullYear(),
+                          date.getMonth(),
+                          date.getDate(),
+                          0, 0, 0, 0
+                        ));
+                        setFiltrosTemp((prev) => ({
+                          ...prev,
+                          fecha_inicio: fechaNormalizada.toISOString(),
+                        }));
+                      } else {
+                        setFiltrosTemp((prev) => ({
+                          ...prev,
+                          fecha_inicio: undefined,
+                        }));
+                      }
                     }}
                     views={['year', 'month', 'day']}
                     slotProps={{
@@ -225,12 +243,30 @@ export const FiltrosReporteComponent: React.FC<FiltrosReporteProps> = ({
                 <Grid size={{ xs: 12, sm: 6, md: 3 }}>
                   <DatePicker
                     label="Fecha Fin"
-                    value={filtrosTemp.fecha_fin ? new Date(filtrosTemp.fecha_fin) : null}
+                    value={filtrosTemp.fecha_fin ? (() => {
+                      // Parsear la fecha ISO y crear una fecha local para mostrar correctamente
+                      const [year, month, day] = filtrosTemp.fecha_fin.split('T')[0].split('-').map(Number);
+                      return new Date(year, month - 1, day);
+                    })() : null}
                     onChange={(date) => {
-                      setFiltrosTemp((prev) => ({
-                        ...prev,
-                        fecha_fin: date?.toISOString(),
-                      }));
+                      if (date) {
+                        // Normalizar al final del día en UTC (23:59:59.999Z)
+                        const fechaNormalizada = new Date(Date.UTC(
+                          date.getFullYear(),
+                          date.getMonth(),
+                          date.getDate(),
+                          23, 59, 59, 999
+                        ));
+                        setFiltrosTemp((prev) => ({
+                          ...prev,
+                          fecha_fin: fechaNormalizada.toISOString(),
+                        }));
+                      } else {
+                        setFiltrosTemp((prev) => ({
+                          ...prev,
+                          fecha_fin: undefined,
+                        }));
+                      }
                     }}
                     views={['year', 'month', 'day']}
                     slotProps={{

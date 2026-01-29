@@ -38,7 +38,7 @@ export const getApiErrorMessage = (
 ): string => {
   // Si es un AxiosError, intentar extraer el mensaje de la respuesta
   if (isAxiosError(error)) {
-    const data = error.response?.data;
+    const data = error.response?.data as Record<string, unknown> | undefined;
 
     if (data) {
       // Prioridad: detail > message > error
@@ -48,7 +48,7 @@ export const getApiErrorMessage = (
 
       // Si hay errores de validación, concatenarlos
       if (data.errors && typeof data.errors === 'object') {
-        const errorMessages = Object.values(data.errors).flat();
+        const errorMessages = Object.values(data.errors as Record<string, unknown[]>).flat();
         if (errorMessages.length > 0) {
           return errorMessages.join('. ');
         }

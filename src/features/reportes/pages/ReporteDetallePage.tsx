@@ -32,7 +32,7 @@ import { LoadingSpinner } from '@/components/common/LoadingSpinner';
 import { FiltrosReporteComponent } from '../components/FiltrosReporte';
 import { TablaReporte } from '../components/TablaReporte';
 import { ExportacionButtons } from '../components/ExportacionButtons';
-import type { FiltrosReporte, CodigoReporte, FormatoExportacion, OrdenDireccion, ColumnaReporte } from '@/types/reportes.types';
+import type { FiltrosReporte, CodigoReporte, FormatoExportacion, OrdenDireccion, ColumnaReporte, TipoDato, Alineacion } from '@/types/reportes.types';
 import { formatDate } from '@/utils/formatters';
 import { isForbiddenError } from '@/utils/errorHandler';
 
@@ -235,39 +235,39 @@ export const ReporteDetallePage: React.FC = () => {
   };
 
   // Preparar columnas para la tabla (compatibilidad con diferentes formatos)
-  const columnas: ColumnaReporte[] = reporte.columnas?.map((col) => ({
+  const columnas = (reporte.columnas?.map((col) => ({
     campo: col.campo,
     nombre_mostrar: (col as any).nombre_mostrar || (col as any).nombre || col.campo,
-    tipo_dato: getTipoDato(col),
+    tipo_dato: getTipoDato(col) as TipoDato,
     orden: (col as any).orden || 0,
     visible: (col as any).visible !== false,
     ordenable: (col as any).ordenable !== false,
     filtrable: (col as any).filtrable || false,
     es_totalizable: (col as any).es_totalizable || false,
     tipo_totalizacion: (col as any).tipo_totalizacion || null,
-    alineacion: (col as any).alineacion || 'left',
+    alineacion: ((col as any).alineacion || 'left') as Alineacion,
     formato: (col as any).formato || null,
     prefijo: (col as any).prefijo || null,
     sufijo: (col as any).sufijo || null,
     decimales: (col as any).decimales ?? 2,
     ancho_minimo: (col as any).ancho_minimo || (col as any).ancho || 100,
-  })) || [];
+  })) || []) as ColumnaReporte[];
 
   // Si no hay columnas definidas, generarlas desde los datos
-  const columnasFinales = columnas.length > 0
+  const columnasFinales: ColumnaReporte[] = columnas.length > 0
     ? columnas
     : reporte.datos.length > 0
       ? Object.keys(reporte.datos[0]).map((key, index) => ({
           campo: key,
           nombre_mostrar: key,
-          tipo_dato: esEntero(key, key) ? 'integer' as const : 'string' as const,
+          tipo_dato: (esEntero(key, key) ? 'integer' : 'string') as TipoDato,
           orden: index,
           visible: true,
           ordenable: true,
           filtrable: false,
           es_totalizable: false,
           tipo_totalizacion: null,
-          alineacion: (esEntero(key, key) ? 'right' : 'left') as const,
+          alineacion: (esEntero(key, key) ? 'right' : 'left') as Alineacion,
           formato: null,
           prefijo: null,
           sufijo: null,
@@ -372,7 +372,7 @@ export const ReporteDetallePage: React.FC = () => {
       >
         {tieneFiltroFecha ? (
           <>
-            Mostrando datos desde <strong>{filtros.fecha_inicio}</strong> hasta <strong>{filtros.fecha_fin}</strong>
+            Mostrando datos desde <strong>{filtros.fecha_inicio?.split('T')[0]}</strong> hasta <strong>{filtros.fecha_fin?.split('T')[0]}</strong>
             {usandoFiltrosDefecto && ` (últimos ${DIAS_POR_DEFECTO} días)`}
           </>
         ) : (

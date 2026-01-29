@@ -13,7 +13,7 @@ export type CodigoReporte =
   | 'RPT_PESADAS'
   | string;
 
-export type FormatoExportacion = 'pdf' | 'excel' | 'csv';
+export type FormatoExportacion = 'pdf' | 'csv';
 
 export type OrdenDireccion = 'asc' | 'desc';
 
